@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fakaleshwar - Connect with Friends</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Audiowide&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        .chat-scroll { scrollbar-width: thin; scrollbar-color: #cbd5e1 #f1f5f9; }
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+        .friendship-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .love-theme { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); }
+        .fight-theme { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); }
+        .tech-theme { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .food-theme { background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%); }
+        .music-theme { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .default-theme { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .message-bubble { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .heart-beat { animation: heartbeat 1.5s ease-in-out infinite; }
+        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        
+        .crazy-title {
+            font-family: 'Kristen ITC', cursive !important;
+            font-weight: bold !important;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 min-h-screen">
+    
+    <!-- Login Page -->
+    <div id="login-page" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 friendship-gradient"></div>
+            
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 friendship-gradient rounded-full flex items-center justify-center mx-auto mb-4 animate-float">
+                    <span class="text-white font-bold text-2xl">👥</span>
+                </div>
+                <h1 class="text-3xl font-bold mb-2 crazy-title">𝔽𝕒𝕜𝕒𝕝𝕖𝕤𝕙𝕨𝕒𝕣</h1>
+                <p class="text-gray-600">Connect, Share, and Build Friendships</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email or Username</label>
+                    <input type="text" id="login-email" placeholder="Enter your email or username" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-purple-600 hover:text-purple-800">Forgot password?</a>
+                </div>
+                <button onclick="login()" class="w-full friendship-gradient text-white py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity">
+                    Sign In
+                </button>
+                <div class="text-center">
+                    <span class="text-gray-600">Don't have an account? </span>
+                    <button onclick="showSignup()" class="text-purple-600 hover:text-purple-800 font-semibold">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup-page" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 friendship-gradient"></div>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 friendship-gradient rounded-full flex items-center justify-center mx-auto mb-3 animate-float">
+                    <span class="text-white font-bold text-xl">✨</span>
+                </div>
+                <h1 class="text-2xl font-bold mb-1 crazy-title">Join 𝔽𝕒𝕜𝕒𝕝𝕖𝕤𝕙𝕨𝕒𝕣</h1>
+                <p class="text-gray-600 text-sm">Create your friendship journey</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        <input type="text" placeholder="John" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        <input type="text" placeholder="Doe" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" placeholder="johndoe123" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" placeholder="Create a strong password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                    <input type="password" placeholder="Confirm your password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <label class="flex items-center">
+                    <input type="checkbox" class="rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                    <span class="ml-2 text-sm text-gray-600">I agree to the Terms of Service and Privacy Policy</span>
+                </label>
+                <button onclick="signup()" class="w-full friendship-gradient text-white py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity">
+                    Create Account
+                </button>
+                <div class="text-center">
+                    <span class="text-gray-600 text-sm">Already have an account? </span>
+                    <button onclick="showLogin()" class="text-purple-600 hover:text-purple-800 font-semibold text-sm">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="hidden">
+        <!-- Mobile Header -->
+        <div class="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
+            <div class="flex items-center justify-between p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 friendship-gradient rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">👥</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold crazy-title">𝔽𝕒𝕜𝕒𝕝𝕖𝕤𝕙𝕨𝕒𝕣</h1>
+                        <p class="text-xs text-gray-500">Building Friendships</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="toggleSearch()" class="p-2 hover:bg-gray-100 rounded-full">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <button onclick="showSettings()" class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-sm">
+                        U
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
+            <div class="flex">
+                <button onclick="showPage('feed')" id="feed-nav" class="flex-1 py-3 text-center">
+                    <div class="flex flex-col items-center">
+                        <svg class="w-5 h-5 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span class="text-xs font-medium">Feed</span>
+                    </div>
+                </button>
+                <button onclick="showPage('chats')" id="chats-nav" class="flex-1 py-3 text-center text-gray-500">
+                    <div class="flex flex-col items-center">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                        <span class="text-xs font-medium">Chats</span>
+                    </div>
+                </button>
+                <button onclick="showPage('topics')" id="topics-nav" class="flex-1 py-3 text-center text-gray-500">
+                    <div class="flex flex-col items-center">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                        </svg>
+                        <span class="text-xs font-medium">Topics</span>
+                    </div>
+                </button>
+                <button onclick="showPage('friends')" id="friends-nav" class="flex-1 py-3 text-center text-gray-500">
+                    <div class="flex flex-col items-center">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        <span class="text-xs font-medium">Friends</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Feed Page -->
+        <div id="feed-page" class="pb-20">
+            <div class="max-w-2xl mx-auto p-4 space-y-6">
+                <!-- Create Post -->
+                <div class="bg-white rounded-2xl shadow-lg p-4">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-semibold">
+                            U
+                        </div>
+                        <input type="text" placeholder="What's on your mind? Share with friends..." class="flex-1 bg-gray-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" onclick="createPost()">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-4">
+                            <button onclick="attachPhoto()" class="flex items-center space-x-2 text-green-600 hover:bg-green-50 px-3 py-2 rounded-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Photo</span>
+                            </button>
+                            <button onclick="openTopicCreator()" class="flex items-center space-x-2 text-purple-600 hover:bg-purple-50 px-3 py-2 rounded-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Topic</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sample Posts -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                J
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800">John Doe</h3>
+                                <p class="text-sm text-gray-500">2 hours ago</p>
+                            </div>
+                            <div class="love-theme text-white px-3 py-1 rounded-full text-sm font-medium">
+                                💕 Love & Relationships
+                            </div>
+                        </div>
+                        <p class="text-gray-800 mb-3">Just celebrated our 2nd anniversary! Love is truly beautiful when you find the right person. What's your secret to a happy relationship? 💕</p>
+                        <div class="love-theme h-48 rounded-xl flex items-center justify-center text-white text-6xl mb-3">
+                            💕
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                            <button onclick="likePost(this)" class="flex items-center space-x-2 text-gray-600 hover:text-red-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">24 Likes</span>
+                            </button>
+                            <button class="flex items-center space-x-2 text-gray-600 hover:text-blue-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">12 Comments</span>
+                            </button>
+                            <button class="flex items-center space-x-2 text-gray-600 hover:text-green-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Share</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                M
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800">Mike Chen</h3>
+                                <p class="text-sm text-gray-500">4 hours ago</p>
+                            </div>
+                            <div class="tech-theme text-white px-3 py-1 rounded-full text-sm font-medium">
+                                📱 Technology
+                            </div>
+                        </div>
+                        <p class="text-gray-800 mb-3">Just got the new iPhone! The camera quality is absolutely insane 📸 Anyone else upgraded recently?</p>
+                        <div class="tech-theme h-48 rounded-xl flex items-center justify-center text-white text-6xl mb-3">
+                            📱
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                            <button onclick="likePost(this)" class="flex items-center space-x-2 text-gray-600 hover:text-red-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">18 Likes</span>
+                            </button>
+                            <button class="flex items-center space-x-2 text-gray-600 hover:text-blue-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">7 Comments</span>
+                            </button>
+                            <button class="flex items-center space-x-2 text-gray-600 hover:text-green-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Share</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chats Page -->
+        <div id="chats-page" class="hidden pb-20">
+            <div class="bg-white border-b border-gray-200 p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-lg font-semibold text-gray-800">Chats</h2>
+                    <button onclick="showCreateGroup()" class="bg-purple-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-600 flex items-center space-x-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>Create Group</span>
+                    </button>
+                </div>
+                <div class="flex space-x-1 bg-gray-100 rounded-lg p-1">
+                    <button onclick="switchChatType('personal')" id="personal-tab" class="flex-1 py-2 px-3 text-sm font-medium bg-white text-purple-600 rounded-md shadow-sm">
+                        Personal
+                    </button>
+                    <button onclick="switchChatType('group')" id="group-tab" class="flex-1 py-2 px-3 text-sm font-medium text-gray-500">
+                        Groups
+                    </button>
+                    <button onclick="switchChatType('global')" id="global-tab" class="flex-1 py-2 px-3 text-sm font-medium text-gray-500">
+                        Global
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-4 space-y-3">
+                <div id="personal-chats">
+                    <!-- Friend Requests Section -->
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-gray-700">Friend Requests</h3>
+                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">2</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                        S
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-800">Sarah Wilson</h4>
+                                        <p class="text-xs text-gray-600">Wants to be your friend</p>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button onclick="acceptFriendRequest('sarah')" class="bg-green-500 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-600">
+                                                Accept
+                                            </button>
+                                            <button onclick="declineFriendRequest('sarah')" class="bg-gray-400 text-white px-3 py-1 rounded-lg text-xs hover:bg-gray-500">
+                                                Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                        A
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-800">Alex Kumar</h4>
+                                        <p class="text-xs text-gray-600">Wants to be your friend</p>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button onclick="acceptFriendRequest('alex')" class="bg-green-500 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-600">
+                                                Accept
+                                            </button>
+                                            <button onclick="declineFriendRequest('alex')" class="bg-gray-400 text-white px-3 py-1 rounded-lg text-xs hover:bg-gray-500">
+                                                Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Chats -->
+                    <div class="mb-2">
+                        <h3 class="text-sm font-semibold text-gray-700 mb-2">Your Chats</h3>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                J
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-gray-800">John Doe</h3>
+                                    <span class="text-xs text-gray-500">2m</span>
+                                </div>
+                                <p class="text-sm text-gray-600 truncate">Hey, what do you think about...</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <button onclick="openChat('john', 'personal')" class="bg-purple-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-600">
+                                        💬 Chat
+                                    </button>
+                                    <button onclick="openTopics('john', 'personal')" class="bg-orange-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-orange-600">
+                                        🎯 Topics
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="group-chats" class="hidden">
+                    <!-- Group Join Requests -->
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-gray-700">Group Join Requests</h3>
+                            <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="bg-orange-50 border border-orange-200 rounded-xl p-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                        M
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-800">Mike Chen</h4>
+                                        <p class="text-xs text-gray-600">Wants to join "Developer Friends"</p>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button onclick="approveGroupRequest('mike', 'developers')" class="bg-green-500 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-600">
+                                                Approve
+                                            </button>
+                                            <button onclick="denyGroupRequest('mike', 'developers')" class="bg-gray-400 text-white px-3 py-1 rounded-lg text-xs hover:bg-gray-500">
+                                                Deny
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-orange-50 border border-orange-200 rounded-xl p-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                        L
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-800">Lisa Park</h4>
+                                        <p class="text-xs text-gray-600">Wants to join "Book Club"</p>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button onclick="approveGroupRequest('lisa', 'bookclub')" class="bg-green-500 text-white px-3 py-1 rounded-lg text-xs hover:bg-green-600">
+                                                Approve
+                                            </button>
+                                            <button onclick="denyGroupRequest('lisa', 'bookclub')" class="bg-gray-400 text-white px-3 py-1 rounded-lg text-xs hover:bg-gray-500">
+                                                Deny
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Your Groups -->
+                    <div class="mb-2">
+                        <h3 class="text-sm font-semibold text-gray-700 mb-2">Your Groups</h3>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                D
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-gray-800">Developer Friends</h3>
+                                    <span class="text-xs text-gray-500">5m</span>
+                                </div>
+                                <p class="text-sm text-gray-600 truncate">Mike: Check out this new framework...</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <button onclick="openChat('developers', 'group')" class="bg-purple-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-600">
+                                        💬 Chat
+                                    </button>
+                                    <button onclick="openTopics('developers', 'group')" class="bg-orange-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-orange-600">
+                                        🎯 Topics
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="global-chats" class="hidden">
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                🔥
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-gray-800">Trending Discussions</h3>
+                                    <span class="text-xs text-gray-500">now</span>
+                                </div>
+                                <p class="text-sm text-gray-600 truncate">Global topic: What's everyone's opinion on...</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="fight-theme text-white text-xs px-2 py-1 rounded-full">🔥 Hot Debate</span>
+                                    <button onclick="openTopics('trending', 'global')" class="bg-orange-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-orange-600">
+                                        🎯 Join Topic
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow mt-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                💚
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="font-semibold text-gray-800">Love & Relationships</h3>
+                                    <span class="text-xs text-gray-500">5m</span>
+                                </div>
+                                <p class="text-sm text-gray-600 truncate">Global topic: Best relationship advice...</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="love-theme text-white text-xs px-2 py-1 rounded-full">💕 Love Talk</span>
+                                    <button onclick="openTopics('love', 'global')" class="bg-orange-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-orange-600">
+                                        🎯 Join Topic
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Topic Modal -->
+        <div id="create-topic-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl max-w-md w-full p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">Create New Topic</h2>
+                    <button onclick="closeCreateTopicModal()" class="p-2 hover:bg-gray-100 rounded-full">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Topic Title</label>
+                        <input type="text" id="topic-title" placeholder="What's your topic about?" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                        <select id="topic-category" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="general">💬 General Discussion</option>
+                            <option value="love">💕 Love & Relationships</option>
+                            <option value="tech">📱 Technology</option>
+                            <option value="food">🍕 Food & Recipes</option>
+                            <option value="music">🎵 Music</option>
+                            <option value="debate">🔥 Debate & Arguments</option>
+                            <option value="travel">✈️ Travel</option>
+                            <option value="sports">⚽ Sports</option>
+                            <option value="movies">🎬 Movies & TV</option>
+                            <option value="books">📚 Books</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea id="topic-description" placeholder="Describe your topic to get better discussions..." rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Visibility</label>
+                        <select id="topic-visibility" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="public">🌍 Public - Everyone can see</option>
+                            <option value="friends">👥 Friends Only</option>
+                            <option value="private">🔒 Private - Invite only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex space-x-3 pt-4">
+                        <button onclick="closeCreateTopicModal()" class="flex-1 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button onclick="createNewTopic()" class="flex-1 py-3 bg-purple-500 text-white rounded-xl font-semibold hover:bg-purple-600">
+                            Create Topic
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Group Modal -->
+        <div id="create-group-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl max-w-md w-full p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">Create New Group</h2>
+                    <button onclick="closeCreateGroup()" class="p-2 hover:bg-gray-100 rounded-full">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Group Name</label>
+                        <input type="text" id="group-name" placeholder="Enter group name" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea id="group-description" placeholder="What's this group about?" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Privacy</label>
+                        <select id="group-privacy" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="public">Public - Anyone can join</option>
+                            <option value="private">Private - Invite only</option>
+                            <option value="request">Request to Join - Approval required</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Add Friends</label>
+                        <div class="space-y-2 max-h-32 overflow-y-auto">
+                            <label class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg">
+                                <input type="checkbox" class="rounded border-gray-300 text-purple-600">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">J</div>
+                                <span class="text-sm text-gray-800">John Doe</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg">
+                                <input type="checkbox" class="rounded border-gray-300 text-purple-600">
+                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">S</div>
+                                <span class="text-sm text-gray-800">Sarah Wilson</span>
+                            </label>
+                            <label class="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg">
+                                <input type="checkbox" class="rounded border-gray-300 text-purple-600">
+                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">A</div>
+                                <span class="text-sm text-gray-800">Alex Kumar</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3 pt-4">
+                        <button onclick="closeCreateGroup()" class="flex-1 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button onclick="createGroup()" class="flex-1 py-3 bg-purple-500 text-white rounded-xl font-semibold hover:bg-purple-600">
+                            Create Group
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-page" class="hidden pb-20">
+            <div class="bg-white border-b border-gray-200 p-4">
+                <div class="flex items-center space-x-3">
+                    <button onclick="showPage('feed')" class="p-2 hover:bg-gray-100 rounded-full">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <h1 class="text-xl font-bold text-gray-800">Settings</h1>
+                </div>
+            </div>
+
+            <div class="p-4 space-y-6">
+                <!-- Profile Section -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                            U
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold text-gray-800">Your Name</h2>
+                            <p class="text-gray-600">@username</p>
+                        </div>
+                        <button class="ml-auto bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-600">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Privacy Settings -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Privacy & Security
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Profile Visibility</p>
+                                <p class="text-sm text-gray-600">Who can see your profile</p>
+                            </div>
+                            <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option>Everyone</option>
+                                <option>Friends Only</option>
+                                <option>Private</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Message Requests</p>
+                                <p class="text-sm text-gray-600">Allow messages from strangers</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Online Status</p>
+                                <p class="text-sm text-gray-600">Show when you're online</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personalization -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                        </svg>
+                        Personalization
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Theme</p>
+                                <p class="text-sm text-gray-600">Choose your app theme</p>
+                            </div>
+                            <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option>Auto</option>
+                                <option>Light</option>
+                                <option>Dark</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Language</p>
+                                <p class="text-sm text-gray-600">App language</p>
+                            </div>
+                            <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option>English</option>
+                                <option>Hindi</option>
+                                <option>Spanish</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Auto-Theme Topics</p>
+                                <p class="text-sm text-gray-600">Change theme based on topic</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6v-2H4v2zM4 15h8v-2H4v2zM4 11h10V9H4v2z"></path>
+                        </svg>
+                        Notifications
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Push Notifications</p>
+                                <p class="text-sm text-gray-600">Receive notifications</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Message Notifications</p>
+                                <p class="text-sm text-gray-600">New message alerts</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-gray-800">Topic Notifications</p>
+                                <p class="text-sm text-gray-600">New topic alerts</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Actions -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Account</h3>
+                    <div class="space-y-3">
+                        <button class="w-full text-left p-3 hover:bg-gray-50 rounded-lg flex items-center justify-between">
+                            <span class="text-gray-800">Change Password</span>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <button class="w-full text-left p-3 hover:bg-gray-50 rounded-lg flex items-center justify-between">
+                            <span class="text-gray-800">Download My Data</span>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <button onclick="logout()" class="w-full text-left p-3 hover:bg-red-50 rounded-lg text-red-600 font-medium">
+                            Sign Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 'feed';
+        let currentChatType = 'personal';
+
+        function showLogin() {
+            document.getElementById('login-page').classList.remove('hidden');
+            document.getElementById('signup-page').classList.add('hidden');
+        }
+
+        function showSignup() {
+            document.getElementById('signup-page').classList.remove('hidden');
+            document.getElementById('login-page').classList.add('hidden');
+        }
+
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Simulate login
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            showPage('feed');
+        }
+
+        function signup() {
+            // Simulate signup
+            document.getElementById('signup-page').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            showPage('feed');
+        }
+
+        function logout() {
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('login-page').classList.remove('hidden');
+        }
+
+        function showPage(page) {
+            // Hide all pages
+            document.querySelectorAll('[id$="-page"]').forEach(p => p.classList.add('hidden'));
+            
+            // Show selected page
+            document.getElementById(page + '-page').classList.remove('hidden');
+            
+            // Update navigation
+            document.querySelectorAll('[id$="-nav"]').forEach(nav => {
+                nav.className = 'flex-1 py-3 text-center text-gray-500';
+            });
+            
+            if (document.getElementById(page + '-nav')) {
+                document.getElementById(page + '-nav').className = 'flex-1 py-3 text-center text-purple-600';
+            }
+            
+            currentPage = page;
+        }
+
+        function switchChatType(type) {
+            currentChatType = type;
+            
+            // Update tab styles
+            document.querySelectorAll('[id$="-tab"]').forEach(tab => {
+                tab.className = 'flex-1 py-2 px-3 text-sm font-medium text-gray-500';
+            });
+            document.getElementById(type + '-tab').className = 'flex-1 py-2 px-3 text-sm font-medium bg-white text-purple-600 rounded-md shadow-sm';
+            
+            // Show/hide chat lists
+            document.getElementById('personal-chats').classList.add('hidden');
+            document.getElementById('group-chats').classList.add('hidden');
+            document.getElementById('global-chats').classList.add('hidden');
+            document.getElementById(type + '-chats').classList.remove('hidden');
+        }
+
+        function openChat(chatId, type) {
+            showChatInterface(chatId, type, 'regular');
+        }
+
+        function openTopics(chatId, type) {
+            if (type === 'global') {
+                showChatInterface(chatId, type, 'topic', 'Global Discussion');
+            } else {
+                showTopicSelector(chatId, type);
+            }
+        }
+
+        function showChatInterface(chatId, type, mode, topicTitle = null) {
+            // Hide main app and show chat interface
+            document.getElementById('main-app').style.display = 'none';
+            
+            // Create chat interface
+            const chatInterface = document.createElement('div');
+            chatInterface.id = 'chat-interface';
+            chatInterface.className = 'fixed inset-0 bg-white z-50 flex flex-col';
+            
+            const themeClass = topicTitle ? getTopicTheme(topicTitle) : 'friendship-gradient';
+            
+            chatInterface.innerHTML = `
+                <!-- Chat Header -->
+                <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <button onclick="closeChatInterface()" class="p-2 hover:bg-gray-100 rounded-full">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="w-10 h-10 ${themeClass} rounded-full flex items-center justify-center text-white font-semibold">
+                            ${chatId.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <h2 class="font-semibold text-gray-800">${chatId}</h2>
+                            ${topicTitle ? `<p class="text-sm text-purple-600">Topic: ${topicTitle}</p>` : `<p class="text-sm text-gray-500">${type} chat</p>`}
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        ${mode === 'regular' ? `<button onclick="showTopicSelector('${chatId}', '${type}')" class="bg-purple-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-600">🎯 Topics</button>` : ''}
+                        ${mode === 'topic' ? `<button onclick="endCurrentTopic()" class="bg-orange-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-orange-600">End Topic</button>` : ''}
+                    </div>
+                </div>
+
+                <!-- Topic Banner (if in topic mode) -->
+                ${topicTitle ? `
+                <div class="${themeClass} text-white p-3 text-center">
+                    <div class="font-semibold">${topicTitle}</div>
+                    <div class="text-sm opacity-90">Topic discussion in progress</div>
+                </div>
+                ` : ''}
+
+                <!-- Messages Area -->
+                <div class="flex-1 overflow-y-auto p-4 space-y-4 ${topicTitle ? themeClass.replace('gradient', 'bg') + ' bg-opacity-5' : 'bg-gray-50'}" id="messages-container">
+                    ${getSampleMessages(chatId, type, mode, topicTitle)}
+                </div>
+
+                <!-- Message Input -->
+                <div class="bg-white border-t border-gray-200 p-4">
+                    <div class="flex items-center space-x-3">
+                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                            </svg>
+                        </button>
+                        <input type="text" id="message-input" placeholder="${topicTitle ? `Share your thoughts on ${topicTitle}...` : 'Type a message...'}" class="flex-1 bg-gray-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500" onkeypress="handleMessageKeyPress(event)">
+                        <button onclick="sendMessage()" class="${themeClass} text-white p-2 rounded-full hover:opacity-90">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(chatInterface);
+            document.getElementById('message-input').focus();
+        }
+
+        function showTopicSelector(chatId, type) {
+            // Hide main app and show topic selector
+            document.getElementById('main-app').style.display = 'none';
+            
+            const topicSelector = document.createElement('div');
+            topicSelector.id = 'topic-selector';
+            topicSelector.className = 'fixed inset-0 bg-white z-50 flex flex-col';
+            
+            topicSelector.innerHTML = `
+                <!-- Header -->
+                <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <button onclick="closeTopicSelector()" class="p-2 hover:bg-gray-100 rounded-full">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <div>
+                            <h2 class="text-lg font-semibold text-gray-800">Topics with ${chatId}</h2>
+                            <p class="text-sm text-gray-500">Create or join topic discussions</p>
+                        </div>
+                    </div>
+                    <button onclick="showCreateTopicForChat('${chatId}', '${type}')" class="bg-purple-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-600 flex items-center space-x-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>New Topic</span>
+                    </button>
+                </div>
+
+                <!-- Topic Tabs -->
+                <div class="bg-white border-b border-gray-200 p-4">
+                    <div class="flex space-x-1 bg-gray-100 rounded-lg p-1">
+                        <button onclick="switchTopicView('active')" id="active-topics-tab" class="flex-1 py-2 px-3 text-sm font-medium bg-white text-purple-600 rounded-md shadow-sm">
+                            Active Topics
+                        </button>
+                        <button onclick="switchTopicView('drafts')" id="drafts-topics-tab" class="flex-1 py-2 px-3 text-sm font-medium text-gray-500">
+                            Draft Topics
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Topics List -->
+                <div class="flex-1 overflow-y-auto p-4">
+                    <div id="active-topics-list">
+                        ${getActiveTopics(chatId, type)}
+                    </div>
+                    <div id="drafts-topics-list" class="hidden">
+                        ${getDraftTopics(chatId, type)}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(topicSelector);
+        }
+
+        function showTopicOptions(chatId) {
+            document.getElementById('topic-options-modal').classList.remove('hidden');
+        }
+
+        function closeTopicOptions() {
+            document.getElementById('topic-options-modal').classList.add('hidden');
+        }
+
+        function createNewTopic() {
+            document.getElementById('topic-options-modal').classList.add('hidden');
+            document.getElementById('create-topic-modal').classList.remove('hidden');
+        }
+
+        function closeCreateTopic() {
+            document.getElementById('create-topic-modal').classList.add('hidden');
+        }
+
+        function startNewTopic() {
+            const title = document.getElementById('topic-title').value;
+            const category = document.getElementById('topic-category').value;
+            const description = document.getElementById('topic-description').value;
+            
+            if (!title.trim()) {
+                alert('Please enter a topic title');
+                return;
+            }
+            
+            alert(`Topic "${title}" created successfully! 🎉\n\nCategory: ${category}\nAll group members can now discuss this topic. The chat will automatically apply themed styling based on the category. When you end the topic, it will be saved as a draft for future continuation.`);
+            
+            // Clear form and close modal
+            document.getElementById('topic-title').value = '';
+            document.getElementById('topic-description').value = '';
+            closeCreateTopic();
+        }
+
+        function endTopicAndSave(topicId) {
+            alert(`Topic ended and saved to archive! 📝\n\nAll messages from this discussion are preserved. Any group member can resume this topic anytime by clicking "Resume" in the Topic Manager. The conversation will continue exactly where it left off.`);
+            closeTopicOptions();
+        }
+
+        function resumeTopicFromDraft(topicId) {
+            alert(`Topic resumed! 🔄\n\nAll previous messages are restored and the discussion continues with the same theme. Group members can pick up the conversation exactly where it was left off.`);
+            closeTopicOptions();
+        }
+
+        function createGlobalTopic() {
+            document.getElementById('create-topic-modal').classList.remove('hidden');
+        }
+
+        function joinGlobalTopic(topicId) {
+            alert(`Joining global topic discussion! 🌍\n\nYou're now part of a worldwide conversation with hundreds of participants. The topic theme is automatically applied for an immersive discussion experience.`);
+        }
+
+        function resumeGlobalTopic(topicId) {
+            alert(`Resuming global topic! 🔄\n\nJoining the archived discussion with all previous messages restored. You can continue participating in this worldwide conversation.`);
+        }
+
+        function showTopicManager() {
+            document.getElementById('topic-manager').classList.remove('hidden');
+        }
+
+        function closeTopicManager() {
+            document.getElementById('topic-manager').classList.add('hidden');
+        }
+
+        function showCreateTopic() {
+            document.getElementById('topic-manager').classList.add('hidden');
+            document.getElementById('topic-modal').classList.remove('hidden');
+        }
+
+        function endTopic(topicId) {
+            // Move topic to drafts
+            alert(`Topic ended and saved as draft! Members can resume this discussion anytime by clicking "Resume" in the topic manager.`);
+            
+            // Update UI to show topic as draft
+            const banner = document.getElementById('active-topic-banner');
+            banner.style.display = 'none';
+            
+            // Add draft message to chat
+            const messagesContainer = document.getElementById('chat-messages');
+            const draftMessage = document.createElement('div');
+            draftMessage.className = 'flex justify-center message-bubble';
+            draftMessage.innerHTML = `
+                <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 max-w-md text-center">
+                    <div class="text-orange-600 font-medium mb-1">📝 Topic Saved as Draft</div>
+                    <div class="text-sm text-gray-600">This discussion has been saved and can be resumed anytime</div>
+                    <div class="text-xs text-gray-500 mt-1">All messages are preserved for future reference</div>
+                </div>
+            `;
+            messagesContainer.appendChild(draftMessage);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            closeTopicManager();
+        }
+
+        function resumeTopic(topicId) {
+            // Resume a draft topic
+            alert(`Resuming topic! All previous messages are restored and the discussion continues with the same theme.`);
+            
+            // Show topic banner again
+            const banner = document.getElementById('active-topic-banner');
+            banner.style.display = 'block';
+            
+            // Add resume message to chat
+            const messagesContainer = document.getElementById('chat-messages');
+            const resumeMessage = document.createElement('div');
+            resumeMessage.className = 'flex justify-center message-bubble';
+            resumeMessage.innerHTML = `
+                <div class="bg-green-50 border border-green-200 rounded-lg p-3 max-w-md text-center">
+                    <div class="text-green-600 font-medium mb-1">🔄 Topic Resumed</div>
+                    <div class="text-sm text-gray-600">Discussion continues from where it left off</div>
+                    <div class="text-xs text-gray-500 mt-1">All previous messages are restored</div>
+                </div>
+            `;
+            messagesContainer.appendChild(resumeMessage);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            closeTopicManager();
+        }
+
+        function createPost() {
+            alert('Create post modal would open here with options to add photos, videos, and select topic categories for automatic theming!');
+        }
+
+        function openTopicCreator() {
+            document.getElementById('create-topic-modal').classList.remove('hidden');
+        }
+
+        function showCreateTopicModal() {
+            document.getElementById('create-topic-modal').classList.remove('hidden');
+        }
+
+        function closeCreateTopicModal() {
+            document.getElementById('create-topic-modal').classList.add('hidden');
+            // Clear form
+            document.getElementById('topic-title').value = '';
+            document.getElementById('topic-description').value = '';
+            document.getElementById('topic-category').value = 'general';
+            document.getElementById('topic-visibility').value = 'public';
+        }
+
+        function createNewTopic() {
+            const title = document.getElementById('topic-title').value;
+            const category = document.getElementById('topic-category').value;
+            const description = document.getElementById('topic-description').value;
+            const visibility = document.getElementById('topic-visibility').value;
+            
+            if (!title.trim()) {
+                alert('Please enter a topic title');
+                return;
+            }
+            
+            const categoryText = document.getElementById('topic-category').selectedOptions[0].text;
+            const visibilityText = document.getElementById('topic-visibility').selectedOptions[0].text;
+            
+            alert(`🎯 Topic "${title}" created successfully!\n\nCategory: ${categoryText}\nVisibility: ${visibilityText}\n\nYour topic will automatically apply themed styling based on the category. People can now join the discussion and the chat will have a beautiful themed background!`);
+            
+            closeCreateTopicModal();
+        }
+
+        function switchTopicType(type) {
+            // Update tab styles
+            document.querySelectorAll('[id$="-topics-tab"]').forEach(tab => {
+                tab.className = 'flex-1 py-2 px-3 text-sm font-medium text-gray-500';
+            });
+            document.getElementById(type + '-topics-tab').className = 'flex-1 py-2 px-3 text-sm font-medium bg-white text-purple-600 rounded-md shadow-sm';
+            
+            // Show/hide topic lists
+            document.getElementById('my-topics').classList.add('hidden');
+            document.getElementById('trending-topics').classList.add('hidden');
+            document.getElementById('global-topics').classList.add('hidden');
+            document.getElementById(type + '-topics').classList.remove('hidden');
+        }
+
+        function switchFriendType(type) {
+            // Update tab styles
+            document.querySelectorAll('[id$="-friends-tab"], #suggestions-tab').forEach(tab => {
+                tab.className = 'flex-1 py-2 px-3 text-sm font-medium text-gray-500';
+            });
+            
+            if (type === 'suggestions') {
+                document.getElementById('suggestions-tab').className = 'flex-1 py-2 px-3 text-sm font-medium bg-white text-purple-600 rounded-md shadow-sm';
+            } else {
+                document.getElementById(type + '-friends-tab').className = 'flex-1 py-2 px-3 text-sm font-medium bg-white text-purple-600 rounded-md shadow-sm';
+            }
+            
+            // Show/hide friend lists
+            document.getElementById('all-friends').classList.add('hidden');
+            document.getElementById('online-friends').classList.add('hidden');
+            document.getElementById('suggestions').classList.add('hidden');
+            
+            if (type === 'suggestions') {
+                document.getElementById('suggestions').classList.remove('hidden');
+            } else {
+                document.getElementById(type + '-friends').classList.remove('hidden');
+            }
+        }
+
+        function joinTopic(topicId) {
+            alert(`🎯 Joining topic discussion!\n\nYou're now part of this themed conversation. The chat will automatically apply the topic's visual theme for an immersive discussion experience. All participants can see the beautiful themed background while discussing!`);
+        }
+
+        function findFriends() {
+            alert('🔍 Find Friends feature!\n\nThis would open a search interface where you can:\n• Search by username or email\n• Find friends from contacts\n• Discover people with similar interests\n• See mutual friends\n• Send friend requests');
+        }
+
+        function sendFriendRequest(friendId) {
+            alert(`✉️ Friend request sent to ${friendId}!\n\nThey will receive a notification and can accept or decline your request. Once accepted, you can start chatting and creating topics together!`);
+            
+            // Update button to show request sent
+            event.target.textContent = 'Request Sent';
+            event.target.className = 'bg-gray-400 text-white px-4 py-2 rounded-lg text-sm cursor-not-allowed';
+            event.target.disabled = true;
+        }
+
+        function createTopicPost() {
+            showCreateTopicModal();
+        }
+
+        function attachPhoto() {
+            alert('Photo attachment feature - would open camera/gallery picker');
+        }
+
+        function likePost(button) {
+            const currentLikes = parseInt(button.querySelector('span').textContent.split(' ')[0]);
+            button.querySelector('span').textContent = `${currentLikes + 1} Likes`;
+            button.classList.add('text-red-500');
+            button.querySelector('svg').classList.add('heart-beat');
+        }
+
+        function showSettings() {
+            showPage('settings');
+        }
+
+        function toggleSearch() {
+            alert('Search functionality - would open search interface to find friends, topics, and posts');
+        }
+
+        // Group Management Functions
+        function showCreateGroup() {
+            document.getElementById('create-group-modal').classList.remove('hidden');
+        }
+
+        function closeCreateGroup() {
+            document.getElementById('create-group-modal').classList.add('hidden');
+            // Clear form
+            document.getElementById('group-name').value = '';
+            document.getElementById('group-description').value = '';
+            document.getElementById('group-privacy').value = 'public';
+            // Uncheck all checkboxes
+            document.querySelectorAll('#create-group-modal input[type="checkbox"]').forEach(cb => cb.checked = false);
+        }
+
+        function createGroup() {
+            const name = document.getElementById('group-name').value;
+            const description = document.getElementById('group-description').value;
+            const privacy = document.getElementById('group-privacy').value;
+            
+            if (!name.trim()) {
+                alert('Please enter a group name');
+                return;
+            }
+            
+            const selectedFriends = [];
+            document.querySelectorAll('#create-group-modal input[type="checkbox"]:checked').forEach(cb => {
+                const friendName = cb.parentElement.querySelector('span').textContent;
+                selectedFriends.push(friendName);
+            });
+            
+            let privacyText = privacy === 'public' ? 'Anyone can join' : 
+                             privacy === 'private' ? 'Invite only' : 'Approval required';
+            
+            alert(`Group "${name}" created successfully! 🎉\n\nPrivacy: ${privacyText}\nMembers invited: ${selectedFriends.length > 0 ? selectedFriends.join(', ') : 'None'}\n\nYour group is now ready for chatting and topic discussions!`);
+            
+            closeCreateGroup();
+        }
+
+        // Friend Request Functions
+        function acceptFriendRequest(friendId) {
+            alert(`✅ Friend request accepted!\n\n${friendId} is now your friend. You can start chatting and creating topics together!`);
+            // Remove the request from UI
+            event.target.closest('.bg-blue-50').remove();
+            updateRequestCount('friend', -1);
+        }
+
+        function declineFriendRequest(friendId) {
+            alert(`❌ Friend request declined.\n\nThe request from ${friendId} has been removed.`);
+            // Remove the request from UI
+            event.target.closest('.bg-blue-50').remove();
+            updateRequestCount('friend', -1);
+        }
+
+        // Group Request Functions
+        function approveGroupRequest(userId, groupId) {
+            alert(`✅ Group request approved!\n\n${userId} has been added to the ${groupId} group. They can now participate in chats and topics.`);
+            // Remove the request from UI
+            event.target.closest('.bg-orange-50').remove();
+            updateRequestCount('group', -1);
+        }
+
+        function denyGroupRequest(userId, groupId) {
+            alert(`❌ Group request denied.\n\nThe request from ${userId} to join ${groupId} has been declined.`);
+            // Remove the request from UI
+            event.target.closest('.bg-orange-50').remove();
+            updateRequestCount('group', -1);
+        }
+
+        function updateRequestCount(type, change) {
+            const selector = type === 'friend' ? 
+                '#personal-chats .bg-red-500' : 
+                '#group-chats .bg-orange-500';
+            const badge = document.querySelector(selector);
+            if (badge) {
+                const currentCount = parseInt(badge.textContent);
+                const newCount = Math.max(0, currentCount + change);
+                badge.textContent = newCount;
+                if (newCount === 0) {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show login page by default
+            showLogin();
+        });
+
+        // Chat Interface Functions
+        function closeChatInterface() {
+            const chatInterface = document.getElementById('chat-interface');
+            if (chatInterface) {
+                chatInterface.remove();
+            }
+            document.getElementById('main-app').style.display = 'block';
+        }
+
+        function closeTopicSelector() {
+            const topicSelector = document.getElementById('topic-selector');
+            if (topicSelector) {
+                topicSelector.remove();
+            }
+            document.getElementById('main-app').style.display = 'block';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const messagesContainer = document.getElementById('messages-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex justify-end message-bubble';
+            
+            messageDiv.innerHTML = `
+                <div class="bg-purple-500 text-white rounded-2xl rounded-br-md px-4 py-2 max-w-xs">
+                    <p class="text-sm">${message}</p>
+                    <p class="text-xs opacity-75 mt-1">Just now</p>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            input.value = '';
+            
+            // Simulate response after 1-2 seconds
+            setTimeout(() => {
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'flex justify-start message-bubble';
+                
+                const responses = [
+                    "That's interesting! Tell me more about that.",
+                    "I totally agree with your point!",
+                    "Hmm, I see it differently. What do you think about...",
+                    "Great point! I hadn't thought of it that way.",
+                    "That reminds me of something similar that happened to me.",
+                    "I love discussing this topic with you!"
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                responseDiv.innerHTML = `
+                    <div class="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-4 py-2 max-w-xs">
+                        <p class="text-sm text-gray-800">${randomResponse}</p>
+                        <p class="text-xs text-gray-500 mt-1">Just now</p>
+                    </div>
+                `;
+                
+                messagesContainer.appendChild(responseDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, Math.random() * 1000 + 1000);
+        }
+
+        function handleMessageKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function getSampleMessages(chatId, type, mode, topicTitle) {
+            if (mode === 'topic' && topicTitle) {
+                return `
+                    <div class="flex justify-center">
+                        <div class="bg-purple-100 border border-purple-200 rounded-lg p-3 max-w-md text-center">
+                            <div class="text-purple-600 font-medium mb-1">🎯 Topic Started</div>
+                            <div class="text-sm text-gray-600">"${topicTitle}" discussion is now active</div>
+                            <div class="text-xs text-gray-500 mt-1">All messages will be themed for this topic</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-start message-bubble">
+                        <div class="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-4 py-2 max-w-xs">
+                            <p class="text-sm text-gray-800">Hey! I started this topic because I thought it would be interesting to discuss.</p>
+                            <p class="text-xs text-gray-500 mt-1">5 min ago</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end message-bubble">
+                        <div class="bg-purple-500 text-white rounded-2xl rounded-br-md px-4 py-2 max-w-xs">
+                            <p class="text-sm">Great idea! I have some thoughts on this.</p>
+                            <p class="text-xs opacity-75 mt-1">3 min ago</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="flex justify-start message-bubble">
+                        <div class="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-4 py-2 max-w-xs">
+                            <p class="text-sm text-gray-800">Hey! How are you doing?</p>
+                            <p class="text-xs text-gray-500 mt-1">10 min ago</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end message-bubble">
+                        <div class="bg-purple-500 text-white rounded-2xl rounded-br-md px-4 py-2 max-w-xs">
+                            <p class="text-sm">I'm doing great! Thanks for asking.</p>
+                            <p class="text-xs opacity-75 mt-1">8 min ago</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-start message-bubble">
+                        <div class="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-4 py-2 max-w-xs">
+                            <p class="text-sm text-gray-800">Want to start a topic discussion?</p>
+                            <p class="text-xs text-gray-500 mt-1">5 min ago</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function getActiveTopics(chatId, type) {
+            return `
+                <div class="space-y-3">
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="love-theme text-white px-2 py-1 rounded-full text-xs font-medium">💕</div>
+                                <h3 class="font-semibold text-gray-800">Best Relationship Advice</h3>
+                            </div>
+                            <span class="text-xs text-gray-500">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">What's the best relationship advice you've ever received?</p>
+                        <div class="flex space-x-2">
+                            <button onclick="joinTopicChat('${chatId}', '${type}', 'Best Relationship Advice')" class="bg-purple-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-600">
+                                💬 Join Chat
+                            </button>
+                            <button onclick="endTopicFromSelector('relationship-advice')" class="bg-orange-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-orange-600">
+                                End Topic
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="tech-theme text-white px-2 py-1 rounded-full text-xs font-medium">📱</div>
+                                <h3 class="font-semibold text-gray-800">Latest Tech Trends</h3>
+                            </div>
+                            <span class="text-xs text-gray-500">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">What technology trends are you most excited about?</p>
+                        <div class="flex space-x-2">
+                            <button onclick="joinTopicChat('${chatId}', '${type}', 'Latest Tech Trends')" class="bg-purple-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-600">
+                                💬 Join Chat
+                            </button>
+                            <button onclick="endTopicFromSelector('tech-trends')" class="bg-orange-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-orange-600">
+                                End Topic
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getDraftTopics(chatId, type) {
+            return `
+                <div class="space-y-3">
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="food-theme text-white px-2 py-1 rounded-full text-xs font-medium">🍕</div>
+                                <h3 class="font-semibold text-gray-700">Favorite Recipes</h3>
+                            </div>
+                            <span class="text-xs text-gray-500">Draft</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Share your favorite recipes and cooking tips!</p>
+                        <div class="flex space-x-2">
+                            <button onclick="resumeTopicChat('${chatId}', '${type}', 'Favorite Recipes')" class="bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600">
+                                🔄 Resume
+                            </button>
+                            <button onclick="deleteTopicDraft('recipes')" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="music-theme text-white px-2 py-1 rounded-full text-xs font-medium">🎵</div>
+                                <h3 class="font-semibold text-gray-700">Music Recommendations</h3>
+                            </div>
+                            <span class="text-xs text-gray-500">Draft</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">What songs are you listening to lately?</p>
+                        <div class="flex space-x-2">
+                            <button onclick="resumeTopicChat('${chatId}', '${type}', 'Music Recommendations')" class="bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600">
+                                🔄 Resume
+                            </button>
+                            <button onclick="deleteTopicDraft('music')" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchTopicView(view) {
+            // Update tab styles
+            document.getElementById('active-topics-tab').className = 'flex-1 py-2 px-3 text-sm font-medium text-gray-500';
+            document.getElementById('drafts-topics-tab').className = 'flex-1 py-2 px-3 text-sm font-medium text-gray-500';
+            document.getElementById(view + '-topics-tab').className = 'flex-1 py-2 px-3 text-sm font-medium bg-white text-purple-600 rounded-md shadow-sm';
+            
+            // Show/hide lists
+            document.getElementById('active-topics-list').classList.add('hidden');
+            document.getElementById('drafts-topics-list').classList.add('hidden');
+            document.getElementById(view + '-topics-list').classList.remove('hidden');
+        }
+
+        function joinTopicChat(chatId, type, topicTitle) {
+            closeTopicSelector();
+            showChatInterface(chatId, type, 'topic', topicTitle);
+        }
+
+        function resumeTopicChat(chatId, type, topicTitle) {
+            closeTopicSelector();
+            showChatInterface(chatId, type, 'topic', topicTitle);
+        }
+
+        function endTopicFromSelector(topicId) {
+            alert(`Topic ended and saved as draft! You can resume this discussion anytime from the Draft Topics tab.`);
+            // Refresh the topic selector to move topic to drafts
+            location.reload();
+        }
+
+        function deleteTopicDraft(topicId) {
+            if (confirm('Are you sure you want to delete this topic draft? This action cannot be undone.')) {
+                alert('Topic draft deleted successfully.');
+                // Remove the draft from UI
+                event.target.closest('.bg-gray-50').remove();
+            }
+        }
+
+        function showCreateTopicForChat(chatId, type) {
+            closeTopicSelector();
+            document.getElementById('create-topic-modal').classList.remove('hidden');
+        }
+
+        function endCurrentTopic() {
+            if (confirm('Are you sure you want to end this topic? It will be saved as a draft and can be resumed later.')) {
+                alert('Topic ended and saved as draft! All messages are preserved and you can resume this discussion anytime.');
+                closeChatInterface();
+            }
+        }
+
+        function getTopicTheme(topicTitle) {
+            const title = topicTitle.toLowerCase();
+            if (title.includes('love') || title.includes('relationship')) return 'love-theme';
+            if (title.includes('tech') || title.includes('technology')) return 'tech-theme';
+            if (title.includes('food') || title.includes('recipe')) return 'food-theme';
+            if (title.includes('music') || title.includes('song')) return 'music-theme';
+            if (title.includes('fight') || title.includes('debate')) return 'fight-theme';
+            return 'friendship-gradient';
+        }
+
+        // Theme management based on topics
+        function applyTopicTheme(topic) {
+            const themes = {
+                'love': 'love-theme',
+                'relationship': 'love-theme',
+                'fight': 'fight-theme',
+                'debate': 'fight-theme',
+                'argument': 'fight-theme',
+                'tech': 'tech-theme',
+                'technology': 'tech-theme',
+                'food': 'food-theme',
+                'recipe': 'food-theme',
+                'music': 'music-theme',
+                'song': 'music-theme'
+            };
+            
+            const topicLower = topic.toLowerCase();
+            for (const [key, themeClass] of Object.entries(themes)) {
+                if (topicLower.includes(key)) {
+                    return themeClass;
+                }
+            }
+            return 'default-theme';
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96c8329fd1c65b2f',t:'MTc1NDc1MjQxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
